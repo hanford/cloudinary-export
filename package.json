@@ -1,0 +1,21 @@
+{
+  "name": "cloudinary-export",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "export": "node app",
+    "test": "standard"
+  },
+  "author": "jackhanford@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "cloudinary": "~1.2.6",
+    "mkdirp": "~0.5.1",
+    "request": "~2.67.0",
+    "run-parallel-limit": "~1.0.2"
+  },
+  "devDependencies": {
+    "standard": "~5.4.1"
+  }
+}
