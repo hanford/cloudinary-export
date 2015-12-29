@@ -12,8 +12,8 @@
   "dependencies": {
     "cloudinary": "~1.2.6",
     "mkdirp": "~0.5.1",
-    "request": "~2.67.0",
-    "run-parallel-limit": "~1.0.2"
+    "run-parallel-limit": "~1.0.2",
+    "simple-get": "~1.4.3"
   },
   "devDependencies": {
     "standard": "~5.4.1"

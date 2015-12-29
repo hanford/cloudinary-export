@@ -1,7 +1,7 @@
 'use strict'
 
 var fs = require('fs')
-var request = require('request')
+var get = require('simple-get')
 var cloudinary = require('cloudinary')
 var runLimit = require('run-parallel-limit')
 var mkdirp = require('mkdirp')
@@ -28,12 +28,10 @@ function downloadImages (urls) {
       return function (callback) {
         let filename = url.split('/')[url.split('/').length - 1]
 
-        request(url, {encoding: 'binary'}, function (err, response, body) {
+        get(url, function (err, res) {
           if (err) return console.error('error requesting', err)
 
-          var stream = fs.createWriteStream(`./images/${filename}`, {defaultEncoding: 'binary'})
-          stream.write(body)
-          stream.end()
+          var stream = res.pipe(fs.createWriteStream(`./images/${filename}`, {defaultEncoding: 'binary'}))
 
           stream.on('finish', function () {
             console.log(`Added => ${filename}`)
