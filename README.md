@@ -3,22 +3,12 @@ Cloudinary export is simple a script that allows you to export/download all of y
 ### Installation
   `npm install`
 
-  After you have all of the dependencies, create a file named `config.js`
+  After you have all of the dependencies, can run the following
 
   ```
-  // Config.js
-
-  module.exports = {
-    "public": "CLOUDINARY_PUBLIC_KEY",
-    "secret": "CLOUDINARY_SECRET_KEY",
-    "cloud": "COMPANY_OR_SITE_NAME"
-  }
+  $ CLOUD_NAME=your_company API_KEY=123123 SECRET_KEY=123123 node app
   ```
 
-All of that information is viewable in your settings over [here](https://cloudinary.com/console/settings/account)  
-
-Once you have the `config.js` you're ready to go, simply run the following command
-
-`npm run export`  
+All of that information is viewable in the [console](https://cloudinary.com/console)
 
 After that is complete all of your images will be the newly created `/images` folder
