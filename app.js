@@ -2,7 +2,7 @@
 
 var fs = require('fs')
 var get = require('simple-get')
-var cloudinary = require('cloudinary')
+var cloudinary = require('cloudinary').v2
 var runLimit = require('run-parallel-limit')
 var mkdirp = require('mkdirp')
 
@@ -12,13 +12,31 @@ cloudinary.config({
   api_secret: process.env.SECRET_KEY
 })
 
-cloudinary.api.resources(function (result) {
-  let urls = result.resources.map(img => {
-    return img.url
-  })
+// Start process
+fetchResources(false)
 
-  downloadImages(urls)
-}, {type: 'upload', max_results: '500'})
+function fetchResources(next_cursor) {
+  let options = {
+    max_results: 500,
+    type: 'upload',
+  }
+
+  if (next_cursor) {
+    options.next_cursor = next_cursor
+  }
+
+  cloudinary.api.resources(options, function (error, result) {
+    let urls = result.resources.map(img => {
+      return img.url
+    })
+
+    downloadImages(urls)
+
+    if (result.next_cursor) {
+      return fetchResources(result.next_cursor)
+    }
+  })
+}
 
 function downloadImages (urls) {
   mkdirp('./images', function (err) {
@@ -41,7 +59,7 @@ function downloadImages (urls) {
       }
     }), 10, function (err) {
       if (err) return console.error(err)
-      console.log(`Done! All images written to ${__dirname}/images`)
+      console.log(`Batch done! Images written to ${__dirname}/images`)
     })
   })
 }
