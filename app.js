@@ -1,10 +1,8 @@
-'use strict'
-
-var fs = require('fs')
-var get = require('simple-get')
-var cloudinary = require('cloudinary').v2
-var runLimit = require('run-parallel-limit')
-var mkdirp = require('mkdirp')
+const fs = require('fs')
+const get = require('simple-get')
+const cloudinary = require('cloudinary').v2
+const runLimit = require('run-parallel-limit')
+const mkdirp = require('mkdirp')
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -18,7 +16,7 @@ fetchResources(false)
 function fetchResources(next_cursor) {
   let options = {
     max_results: 500,
-    type: 'upload',
+    type: 'upload'
   }
 
   if (next_cursor) {
@@ -26,9 +24,7 @@ function fetchResources(next_cursor) {
   }
 
   cloudinary.api.resources(options, function (error, result) {
-    let urls = result.resources.map(img => {
-      return img.url
-    })
+    let urls = result.resources.map(img => img.url)
 
     downloadImages(urls)
 
